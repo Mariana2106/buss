@@ -1,13 +1,19 @@
-let rows, cols, mineCount; // Definir variables globales
+let rows, cols, mineCount;
 
-// Función para cargar la configuración del juego desde config.json
+// Función para cargar la configuración del juego desde JSON
 async function loadGameConfig() {
     const response = await fetch('config.json');
     const config = await response.json();
     return config;
 }
 
-// Función para inicializar el juego utilizando la configuración cargada
+// Cargar los puntajes más altos
+async function loadHighScores() {
+    const config = await loadGameConfig();
+    return config.highScores || [];
+}
+
+// Inicializar el juego
 async function initGame() {
     const config = await loadGameConfig();
     if (config) {
@@ -19,9 +25,23 @@ async function initGame() {
         placeMines(rows, cols, mineCount);
         addEventListeners();
     }
+    displayHighScores();
 }
 
-// Cada celda es un div que representa una casilla, con un atributo data-row y data-col que indica la fila y columna de la celda
+// Mostrar los puntajes más altos en la interfaz
+async function displayHighScores() {
+    const scores = await loadHighScores();
+    const scoreBoard = document.getElementById('high-scores');
+    scoreBoard.innerHTML = '';
+
+    scores.forEach(score => {
+        const scoreItem = document.createElement('li');
+        scoreItem.textContent = `${score.player} - ${score.time} segundos - ${score.date}`;
+        scoreBoard.appendChild(scoreItem);
+    });
+}
+
+// Crear el tablero
 function createBoard(rows, cols) {
     const board = document.getElementById("board");
     board.style.gridTemplateRows = `repeat(${rows}, 30px)`;
@@ -38,8 +58,7 @@ function createBoard(rows, cols) {
     }
 }
 
-// Coloca las minas en celdas aleatorias
-// Se verifica que no se coloquen dos minas en la misma celda
+// Colocar minas aleatoriamente
 function placeMines(rows, cols, mineCount) {
     let mines = 0;
     while (mines < mineCount) {
@@ -53,59 +72,7 @@ function placeMines(rows, cols, mineCount) {
     }
 }
 
-// Cuenta las minas adyacentes a una celda específica
-function calculateAdjacentMines(row, col) {
-    let adjacentMines = 0;
-    for (let i = row - 1; i <= row + 1; i++) {
-        for (let j = col - 1; j <= col + 1; j++) {
-            if (i >= 0 && i < rows && j >= 0 && j < cols) {
-                const cell = document.querySelector(`.cell[data-row="${i}"][data-col="${j}"]`);
-                if (cell && cell.classList.contains("mine")) {
-                    adjacentMines++;
-                }
-            }
-        }
-    }
-    return adjacentMines;
-}
-
-// Revela una celda específica
-function revealCell(row, col) {
-    const cell = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
-
-    if (cell.classList.contains("revealed")) {
-        return;
-    }
-
-    cell.classList.add("revealed");
-
-    if (cell.classList.contains("mine")) {
-        cell.classList.add("mine-revealed");
-        showMessage("Game Over");
-        revealAllCell();
-        return;
-    }
-
-    const adjacentMines = calculateAdjacentMines(row, col);
-    if (adjacentMines > 0) {
-        cell.textContent = adjacentMines;
-        cell.classList.add("number");
-    } else {
-        cell.classList.add("empty");
-        for (let i = row - 1; i <= row + 1; i++) {
-            for (let j = col - 1; j <= col + 1; j++) {
-                if (i >= 0 && i < rows && j >= 0 && j < cols) {
-                    if (!(i === row && j === col)) {
-                        revealCell(i, j);
-                    }
-                }
-            }
-        }
-    }
-    checkVictory();
-}
-
-// Verifica si el jugador ha ganado el juego
+// Verificar victoria
 function checkVictory() {
     const totalCells = document.querySelectorAll(".cell").length;
     const revealedCells = document.querySelectorAll(".cell.revealed").length;
@@ -113,31 +80,25 @@ function checkVictory() {
     if (totalCells - revealedCells === mineCount) {
         showMessage("You Win!");
         revealAllCell();
+        saveScore();
     }
 }
 
-// Marca una celda con una bandera
-function markCell(row, col) {
-    const cell = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
-    if (cell.classList.contains("marked")) {
-        cell.classList.remove("marked");
-    } else {
-        cell.classList.add("marked");
-    }
+// Guardar un nuevo puntaje al ganar
+async function saveScore() {
+    const player = prompt("¡Ganaste! Ingresa tu nombre:");
+    const time = Math.floor(Math.random() * 100); // Simulación del tiempo
+    const newScore = {
+        player: player,
+        time: time,
+        date: new Date().toISOString().split('T')[0]
+    };
+    
+    console.log("Nuevo puntaje:", newScore);
+    // Aquí podrías implementar lógica para guardar el nuevo puntaje en un backend o API
 }
 
-// Revela todas las celdas del tablero
-function revealAllCell() {
-    const cells = document.querySelectorAll(".cell");
-    cells.forEach(cell => {
-        cell.classList.add("revealed");
-        if (cell.classList.contains("mine")) {
-            cell.classList.add("mine-revealed");
-        }
-    });
-}
-
-// Función para agregar los eventos
+// Agregar eventos a las celdas
 function addEventListeners() {
     const cells = document.querySelectorAll(".cell");
     cells.forEach(cell => {
@@ -149,7 +110,7 @@ function addEventListeners() {
     document.getElementById("instructions-button").addEventListener("click", showInstructions);
 }
 
-// Función para manejar el click
+// Manejar clics y reinicio
 function handleClick(event) {
     const cell = event.target;
     const row = parseInt(cell.dataset.row);
@@ -157,7 +118,6 @@ function handleClick(event) {
     revealCell(row, col);
 }
 
-// Función para manejar el click derecho
 function handleRightClick(event) {
     event.preventDefault();
     const cell = event.target;
@@ -166,13 +126,12 @@ function handleRightClick(event) {
     markCell(row, col);
 }
 
-// Reinicia el juego
 function resetGame() {
     document.getElementById("board").innerHTML = "";
     initGame();
 }
 
-// Muestra un mensaje en un diálogo emergente
+// Mostrar mensaje emergente
 function showMessage(message) {
     const dialog = document.getElementById("dialog");
     const messageElement = document.getElementById("dialog-message");
@@ -186,44 +145,5 @@ function showMessage(message) {
     };
 }
 
-// Muestra las instrucciones del juego
-function showInstructions() {
-    const instructions = `
-        ¡Bienvenido a Buscaminas!
-        - Haz clic en las celdas para revelarlas.
-        - El número en una celda indica cuántas minas hay alrededor de esa celda.
-        - Si revelas una mina, pierdes.
-        - Marca las celdas sospechosas de tener minas con clic derecho.
-        ¡Buena suerte!
-    `;
-
-    const instructionsDialog = document.getElementById("instructions-dialog");
-    const instructionsMessage = document.getElementById("instructions-message");
-    const instructionsOkButton = document.getElementById("instructions-ok");
-
-    instructionsMessage.textContent = instructions;
-    instructionsDialog.style.display = "block";
-
-    instructionsOkButton.onclick = function() {
-        instructionsDialog.style.display = "none";
-    };
-}
-
+// Iniciar el juego al cargar la página
 window.onload = initGame;
-// Leer el JSON (simulando su obtención desde un archivo o API)
-async function getHighScores() {
-  const response = await fetch('path/to/highscores.json');
-  const data = await response.json();
-  return data.highScores;
-}
-
-// Agregar un nuevo puntaje
-function addHighScore(player, time) {
-  const newScore = {
-    player: player,
-    time: time,
-    date: new Date().toISOString().split('T')[0]
-  };
-  // Aquí podrías agregar lógica para guardar el nuevo puntaje en el backend
-  console.log('Nuevo puntaje:', newScore);
-}
