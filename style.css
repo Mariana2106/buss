@@ -1,0 +1,171 @@
+#game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #fc92dc;
+}
+
+body {
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+}
+
+#info {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #555;
+}
+
+#board {
+    display: grid;
+    gap: 2px;
+    border: 2px solid #333;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.cell {
+    width: 30px;
+    height: 30px;
+    background-color: #f0f0f0;
+    border: 1px solid #999;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    background-size: cover;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.cell.revealed {
+    background-color: #eee;
+    cursor: default;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.cell.mine-revealed {
+    background-image: url('https://w7.pngwing.com/pngs/757/96/png-transparent-minesweeper-windows-vista-video-game-windows-7-android-blue-computer-computer-wallpaper-thumbnail.png');
+    background-color: #f00;
+}
+
+.cell.number {
+    color: #000;
+    background-color: #fff;
+}
+
+.cell.empty {
+    background-color: #e0e0e0;
+}
+
+.cell.marked {
+    background-image: url('https://cdn.reludi.com/media/games/ft4casyhbxws.png');
+    background-size: cover;
+}
+
+.cell:hover {
+    background-color: #ddd;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.dialog {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    width: 300px;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.dialog-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    position: relative;
+}
+
+.dialog-content span {
+    display: block;
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #333;
+}
+
+.dialog-content button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.dialog-content button:hover {
+    background-color: #0056b3;
+}
+
+.dialog-content-instructions {
+    text-align: center;
+}
+
+#reset-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+#reset-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+#instructions-button {
+    padding: 10px 20px;
+    margin: 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+#instructions-dialog {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 2px solid #444;
+    z-index: 1000;
+    width: 300px;
+    padding: 20px;
+    border-radius: 8px;
+}
+ 
+#instructions-ok {
+    margin-top: 10px;
+    padding: 5px 10spx;
+    cursor: pointer;
+}
