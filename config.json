@@ -1,9 +1,7 @@
 {
-    "rows": 15,
-    "columns": 15,
-    "mines": 40
-}
-{
+  "rows": 15,
+  "columns": 15,
+  "mines": 40,
   "highScores": [
     {
       "player": "Alice",
