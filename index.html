@@ -1,31 +1,46 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="description" content="Pagina de inicio">
-        <title>Buscaminas - Mariana Benavides</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <div id = "game-container">
-            <h1>Buscaminas</h1>
-            <h2>Mariana Benavides</h2>
-            <div id="board"></div>
-            <button id="instructions-button">Instrucciones</button> 
-            <button id="reset-button">Reset</button>
-            <div id="instructions-dialog" class="instructions-dialog">
-                <div class="dialog-content-instructions">
-                    <p id="instructions-message">Aquí irán las instrucciones del juego.</p>
-                    <button id="instructions-ok">Ok</button>
-                </div>
-            </div>
-            <div id="dialog" class="dialog">
-                <div class="dialog-content">
-                    <span id="dialog-message"></span>
-                    <button id="dialog-ok">Ok</button>
-                </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Pagina de inicio">
+    <title>Buscaminas - Mariana Benavides</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <h1>Buscaminas</h1>
+        <h2>Mariana Benavides</h2>
+
+        <!-- Tablero del juego -->
+        <div id="board"></div>
+
+        <!-- Botones de control -->
+        <button id="instructions-button">Instrucciones</button>
+        <button id="reset-button">Reset</button>
+
+        <!-- Diálogo de instrucciones -->
+        <div id="instructions-dialog" class="instructions-dialog">
+            <div class="dialog-content-instructions">
+                <p id="instructions-message">Aquí irán las instrucciones del juego.</p>
+                <button id="instructions-ok">Ok</button>
             </div>
         </div>
-        <script src="script.js"></script>
-    </body>
+
+        <!-- Diálogo emergente para mensajes -->
+        <div id="dialog" class="dialog">
+            <div class="dialog-content">
+                <span id="dialog-message"></span>
+                <button id="dialog-ok">Ok</button>
+            </div>
+        </div>
+
+        <!-- Sección de puntajes altos -->
+        <div id="high-scores-container">
+            <h2>Puntajes más altos</h2>
+            <ul id="high-scores"></ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
 </html>
