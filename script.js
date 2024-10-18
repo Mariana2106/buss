@@ -210,3 +210,20 @@ function showInstructions() {
 }
 
 window.onload = initGame;
+// Leer el JSON (simulando su obtención desde un archivo o API)
+async function getHighScores() {
+  const response = await fetch('path/to/highscores.json');
+  const data = await response.json();
+  return data.highScores;
+}
+
+// Agregar un nuevo puntaje
+function addHighScore(player, time) {
+  const newScore = {
+    player: player,
+    time: time,
+    date: new Date().toISOString().split('T')[0]
+  };
+  // Aquí podrías agregar lógica para guardar el nuevo puntaje en el backend
+  console.log('Nuevo puntaje:', newScore);
+}
