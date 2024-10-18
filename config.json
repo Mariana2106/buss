@@ -1,0 +1,19 @@
+{
+  "highScores": [
+    {
+      "player": "Alice",
+      "time": 30,
+      "date": "2024-10-18"
+    },
+    {
+      "player": "Bob",
+      "time": 45,
+      "date": "2024-10-17"
+    },
+    {
+      "player": "Carlos",
+      "time": 50,
+      "date": "2024-10-16"
+    }
+  ]
+}
