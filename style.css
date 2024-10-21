@@ -12,16 +12,8 @@ h1 {
 }
 
 body {
-    background-size: cover;
-    background-attachment: fixed;
     font-family: 'Roboto', sans-serif;
     color: #333;
-}
-
-#info {
-    margin-bottom: 10px;
-    font-size: 18px;
-    color: #555;
 }
 
 #board {
@@ -37,59 +29,34 @@ body {
     height: 30px;
     background-color: #f0f0f0;
     border: 1px solid #999;
-    border-radius: 5px;
     text-align: center;
-    line-height: 30px;
     cursor: pointer;
-    background-size: cover;
-    transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .cell.revealed {
     background-color: #eee;
     cursor: default;
-    transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 .cell.mine-revealed {
     background-color: #f00;
 }
 
-.cell.empty {
-    background-color: #e0e0e0;
-}
-
-.cell.marked {
-    background-image: url('flag-image-url'); /* URL de la imagen de la bandera */
-    background-size: cover;
-}
-
-.cell:hover {
-    background-color: #ddd;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+#reset-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
 }
 
 .dialog {
     display: none;
     position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
     background-color: rgba(0, 0, 0, 0.6);
-    z-index: 1000;
     width: 300px;
     padding: 20px;
     border-radius: 8px;
-}
-
-.dialog-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
     text-align: center;
-    position: relative;
 }
 
-.dialog-content span {
-    display: block;
-    margin-bottom: 20
