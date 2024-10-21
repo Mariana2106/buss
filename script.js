@@ -1,4 +1,4 @@
-let rows, cols, mineCount;
+let rows, cols, mineCount, startTime;
 
 // Función para cargar la configuración del juego desde JSON
 async function loadGameConfig() {
@@ -24,6 +24,7 @@ async function initGame() {
         createBoard(rows, cols);
         placeMines(rows, cols, mineCount);
         addEventListeners();
+        startTime = new Date(); // Iniciar el temporizador
     }
     displayHighScores();
 }
@@ -36,7 +37,7 @@ async function displayHighScores() {
 
     scores.forEach(score => {
         const scoreItem = document.createElement('li');
-        scoreItem.textContent = `${score.player} - ${score.time} segundos - ${score.date}`;
+        scoreItem.textContent = `${score.player} - ${score.time} segundos`;
         scoreBoard.appendChild(scoreItem);
     });
 }
@@ -78,8 +79,8 @@ function checkVictory() {
     const revealedCells = document.querySelectorAll(".cell.revealed").length;
 
     if (totalCells - revealedCells === mineCount) {
-        showMessage("You Win!");
-        revealAllCell();
+        showMessage("¡Ganaste!");
+        revealAllCells();
         saveScore();
     }
 }
@@ -87,7 +88,7 @@ function checkVictory() {
 // Guardar un nuevo puntaje al ganar
 async function saveScore() {
     const player = prompt("¡Ganaste! Ingresa tu nombre:");
-    const time = Math.floor(Math.random() * 100); // Simulación del tiempo
+    const time = Math.floor((new Date() - startTime) / 1000); // Calcular el tiempo real
     const newScore = {
         player: player,
         time: time,
