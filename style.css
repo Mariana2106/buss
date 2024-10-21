@@ -52,13 +52,7 @@ body {
 }
 
 .cell.mine-revealed {
-    background-image: url('https://w7.pngwing.com/pngs/757/96/png-transparent-minesweeper-windows-vista-video-game-windows-7-android-blue-computer-computer-wallpaper-thumbnail.png');
     background-color: #f00;
-}
-
-.cell.number {
-    color: #000;
-    background-color: #fff;
 }
 
 .cell.empty {
@@ -66,7 +60,7 @@ body {
 }
 
 .cell.marked {
-    background-image: url('https://cdn.reludi.com/media/games/ft4casyhbxws.png');
+    background-image: url('flag-image-url'); /* URL de la imagen de la bandera */
     background-size: cover;
 }
 
@@ -98,74 +92,4 @@ body {
 
 .dialog-content span {
     display: block;
-    margin-bottom: 20px;
-    font-size: 18px;
-    color: #333;
-}
-
-.dialog-content button {
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-}
-
-.dialog-content button:hover {
-    background-color: #0056b3;
-}
-
-.dialog-content-instructions {
-    text-align: center;
-}
-
-#reset-button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    font-size: 18px;
-    border: none;
-    border-radius: 10px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-#reset-button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-}
-
-#instructions-button {
-    padding: 10px 20px;
-    margin: 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s, transform 0.3s;
-}
-
-#instructions-dialog {
-    display: none;
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    border: 2px solid #444;
-    z-index: 1000;
-    width: 300px;
-    padding: 20px;
-    border-radius: 8px;
-}
- 
-#instructions-ok {
-    margin-top: 10px;
-    padding: 5px 10spx;
-    cursor: pointer;
-}
+    margin-bottom: 20
